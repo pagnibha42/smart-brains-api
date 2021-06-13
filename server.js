@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 app.post('/signin', (req, res) => {
     if (req.body.email === database.users[0].email &&
         req.body.password === database.users[0].password)
-        res.json('success');
+        res.json(database.users[0]);
     else {
         res.status(400).json('error logging in')
     }
@@ -54,15 +54,10 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
     const { email, name, password} = req.body;
-
-    bcrypt.hash(password, null, null, function(err, hash) {
-        console.log(hash)})
-        
     database.users.push({
         id: '125',
         name: name,
         email: email,
-        password: password,
         entries: 0,
         joined: new Date()
     })
@@ -87,7 +82,7 @@ app.get('/profile/:id', (req, res) => {
 
 /*IMAGE ROUTE*/
 
-app.post('/image', (req, res) => {
+app.put('/image', (req, res) => {
     const { id } = req.body;
     let found = false
     database.users.forEach(user => {
@@ -101,17 +96,6 @@ app.post('/image', (req, res) => {
         res.status(400).json('not found')
     }
 })
-
-// bcrypt.hash(password, null, null, function(err, hash) {
-//     console.log(hash)
-// });
-// // Load hash from your password DB.
-// bcrypt.compare("bacon", hash, function(err, res) {
-//     // res == true
-// });
-// bcrypt.compare("veggies", hash, function(err, res) {
-//     // res = false
-// });
 
 app.listen(3000, () => {
     console.log('app is running on port 3000');
