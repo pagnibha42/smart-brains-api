@@ -12,6 +12,7 @@ const database = {
         {
             id: '123',
             name: 'John',
+            password: 'cookies',
             email: 'john@xyz.com',
             entries: 0,
             joined: new Date()
@@ -19,6 +20,7 @@ const database = {
         {
             id: '124',
             name: 'Ogni',
+            password: 'bananas',
             email: 'ogni@xyz.com',
             entries: 0,
             joined: new Date()
@@ -40,13 +42,6 @@ app.get('/', (req, res) => {
 /*SIGNIN ROUTE*/
 
 app.post('/signin', (req, res) => {
-    
-    bcrypt.compare("eggs", '$2a$10$JgFqEHq.fuplFnlTe5Tx8eECUzf.1.Z0ivyfLN85sqaJO4fcSDoFi', function(err, res) {
-        console.log('first guess', res)
-    });
-    bcrypt.compare("veggies", '$2a$10$JgFqEHq.fuplFnlTe5Tx8eECUzf.1.Z0ivyfLN85sqaJO4fcSDoFi', function(err, res) {
-        console.log('second guess', res)
-    });
     if (req.body.email === database.users[0].email &&
         req.body.password === database.users[0].password)
         res.json('success');
